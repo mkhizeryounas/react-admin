@@ -74,16 +74,30 @@ function Header({ name, subName, onPress }) {
         <Col span={24} md={18} className='header-control'>
           <Badge size='small' count={0}>
             <Dropdown overlay={menu} trigger={['click']}>
-              <a
-                href='#pablo'
-                className='ant-dropdown-link'
-                onClick={(e) => e.preventDefault()}
+              <Button
+                type='text'
+                style={{
+                  boxShadow: 'none',
+                  padding: 'auto',
+                  height: '55px',
+                }}
+                size='large'
+                icon={
+                  <Avatar
+                    style={{ backgroundColor: '#e2e2e2' }}
+                    src='https://joeschmoe.io/api/v1/random'
+                  />
+                }
               >
-                <Avatar
-                  style={{ backgroundColor: '#e2e2e2' }}
-                  src='https://joeschmoe.io/api/v1/random'
-                />
-              </a>
+                <span
+                  style={{
+                    marginLeft: '5px',
+                    fontSize: '14px',
+                  }}
+                >
+                  Khizer Younas
+                </span>
+              </Button>
             </Dropdown>
           </Badge>
 

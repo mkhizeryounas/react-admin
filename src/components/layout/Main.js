@@ -7,7 +7,8 @@ import Footer from './Footer';
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
-function Main({ children }) {
+function Main(props) {
+  const { children } = props;
   const [visible, setVisible] = useState(false);
   const [sidenavColor, setSidenavColor] = useState('#1890ff');
   const [sidenavType, setSidenavType] = useState('transparent');
