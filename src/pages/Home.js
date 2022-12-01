@@ -34,7 +34,7 @@ import team2 from '../assets/images/team-2.jpg';
 import team3 from '../assets/images/team-3.jpg';
 import team4 from '../assets/images/team-4.jpg';
 import card from '../assets/images/info-card-1.jpg';
-import HttpButton from '../components/HttpButton';
+import withLayoout from '../hocs/withLayoout';
 
 function Home() {
   const { Title, Text } = Typography;
@@ -332,14 +332,7 @@ function Home() {
 
   return (
     <>
-      <div className='layout-content'>
-        <Row>
-          <HttpButton />
-          <br />
-          <br />
-          <br />
-        </Row>
-
+      <div className='layout-content top-p'>
         <Row className='rowgap-vbox' gutter={[24, 0]}>
           {count.map((c, index) => (
             <Col
@@ -555,4 +548,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withLayoout(Home);

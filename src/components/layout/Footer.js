@@ -1,5 +1,4 @@
 import { Layout, Row, Col } from 'antd';
-import { HeartFilled } from '@ant-design/icons';
 
 function Footer() {
   const { Footer: AntFooter } = Layout;
@@ -8,15 +7,14 @@ function Footer() {
     <AntFooter style={{ background: '#fafafa' }}>
       <Row className='just'>
         <Col xs={24} md={12} lg={12}>
-          <div className='copyright'>
-            © 2022, made with
-            {<HeartFilled />} in Canada.
-          </div>
+          {/* <div className='copyright'>
+            © {new Date().getUTCFullYear()}, All rights reserved.
+          </div> */}
         </Col>
         <Col xs={24} md={12} lg={12}>
           <div className='footer-menu'>
             <ul>
-              <li className='nav-item'>
+              {/* <li className='nav-item'>
                 <a
                   href='#pablo'
                   className='nav-link text-muted'
@@ -33,7 +31,7 @@ function Footer() {
                 >
                   Github
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </Col>
