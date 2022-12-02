@@ -13,6 +13,8 @@ const TableManagement = ({
   onTableSelect = () => {},
   refresh = 0,
   refreshTableList = () => {},
+  setEditTableId = () => {},
+  editTableId = false,
 }) => {
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
@@ -55,6 +57,8 @@ const TableManagement = ({
           onTableSelect(id);
           setSelectedTable(id);
         }}
+        setEditTableId={setEditTableId}
+        editTableId={editTableId}
       />
 
       <div className='row'>

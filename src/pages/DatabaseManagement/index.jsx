@@ -30,6 +30,8 @@ const DatabaseManagement = () => {
   const [selectedTable, setSelectedTable] = useState(null);
   const [refreshCount, setRefreshCount] = useState(0);
 
+  const [editTableId, setEditTableId] = useState(false);
+
   const showConfirm = (cb) => {
     confirm({
       icon: <ExclamationCircleOutlined />,
@@ -42,7 +44,13 @@ const DatabaseManagement = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key='1' icon={<SettingOutlined />}>
+      <Menu.Item
+        key='1'
+        onClick={() => {
+          setEditTableId(selectedTable._id);
+        }}
+        icon={<SettingOutlined />}
+      >
         Edit configuration
       </Menu.Item>
       <Menu.Item key='2' icon={<SyncOutlined />}>
@@ -67,7 +75,7 @@ const DatabaseManagement = () => {
     if (!id) {
       return;
     }
-    const { data: table } = await axios.get(`/tables/${id}/coonfiguration`);
+    const { data: table } = await axios.get(`/tables/${id}/configuration`);
     setSelectedTable(table);
   };
 
@@ -90,6 +98,8 @@ const DatabaseManagement = () => {
             onTableSelect={handleTableSelect}
             refresh={refreshCount}
             refreshTableList={refreshTableList}
+            editTableId={editTableId}
+            setEditTableId={setEditTableId}
           />
         </Sider>
 
@@ -117,7 +127,7 @@ const DatabaseManagement = () => {
                   }
                   subTitle={<></>}
                   extra={[
-                    <Dropdown key='0' onClick={console.log} overlay={menu}>
+                    <Dropdown key='0' overlay={menu}>
                       <Button>
                         <EllipsisOutlined /> More
                       </Button>

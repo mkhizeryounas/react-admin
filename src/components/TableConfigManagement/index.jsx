@@ -1,17 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Drawer, Form, Input, Space, message } from 'antd';
 import ColumnConfig from './ColumnConfig';
 import axios from '../../utils/axios';
 
 const TableConfigManagement = ({
-  id,
-  isEdit = false,
+  editTableId = false,
+  setEditTableId = () => {},
   refreshTableList = () => {},
   onTableSelect = () => {},
 }) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
+  const isEditing = !!editTableId;
+
+  const setTableConfig = async (id) => {
+    try {
+      const { data } = await axios.get(`/tables/${id}/configuration`);
+      form.setFieldsValue(data);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    if (editTableId) {
+      message.loading('Loading table configuration...');
+      setTableConfig(editTableId).then(() => {
+        setOpen(true);
+        message.destroy();
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editTableId]);
 
   const showDrawer = () => {
     setOpen(true);
@@ -19,6 +38,7 @@ const TableConfigManagement = ({
 
   const onClose = () => {
     setOpen(false);
+    setEditTableId(null);
     form.setFieldsValue({ fields: [], name: '' });
   };
 
@@ -45,11 +65,11 @@ const TableConfigManagement = ({
         style={{ width: '100%', margin: '10px 0' }}
       >
         <PlusOutlined />
-        New table
+        Add Table
       </Button>
 
       <Drawer
-        title={isEdit ? 'Edit table' : 'New table'}
+        title={isEditing ? 'Edit table' : 'New table'}
         width={820}
         onClose={onClose}
         placement='left'
