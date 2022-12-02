@@ -1,52 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, Button, Badge } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import './style.scss';
 import FieldConfigModal from './FieldConfigModal';
 
-const ColumnConfig = () => {
-  const [fields, setFields] = useState([
-    {
-      default: null,
-      isRequired: false,
-      pattern: null,
-      isMultiSelect: false,
-      link: null,
-      _id: '638836ce2458680d0a9a383a',
-      name: 'First Name',
-      type: 'text',
-      options: [],
-      order: 0,
-    },
-    {
-      default: null,
-      isRequired: false,
-      pattern: null,
-      isMultiSelect: false,
-      link: null,
-      _id: '638836ce2458680d0a9a383b',
-      name: 'Last Name',
-      type: 'text',
-      options: [],
-      order: 1,
-    },
-    {
-      default: null,
-      isRequired: false,
-      pattern: '^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$',
-      isMultiSelect: false,
-      link: null,
-      _id: '638836ce2458680d0a9a383c',
-      name: 'Postal Code',
-      type: 'text',
-      options: [],
-      order: 2,
-    },
-  ]);
+const ColumnConfig = ({ defaultFields = [], onChange = () => {} }) => {
+  const [fields, setFields] = useState(defaultFields);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [selectedField, setSelectedField] = useState(null);
+
+  useEffect(() => {
+    onChange(fields);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fields]);
 
   const handleDelete = (index) => {
     const newFields = [...fields];

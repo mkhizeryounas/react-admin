@@ -1,9 +1,19 @@
-import { Layout, PageHeader, Button, Menu, Dropdown, Empty } from 'antd';
+import {
+  Layout,
+  PageHeader,
+  Button,
+  Menu,
+  Dropdown,
+  Empty,
+  Modal,
+  message,
+} from 'antd';
 import {
   SettingOutlined,
   SyncOutlined,
   EllipsisOutlined,
   DeleteOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 
@@ -14,10 +24,21 @@ import TableManagement from '../../components/TableManagement';
 import GridTable from '../../components/GridTable';
 
 const { Sider, Content } = Layout;
+const { confirm } = Modal;
 
 const DatabaseManagement = () => {
   const [selectedTable, setSelectedTable] = useState(null);
   const [refreshCount, setRefreshCount] = useState(0);
+
+  const showConfirm = (cb) => {
+    confirm({
+      icon: <ExclamationCircleOutlined />,
+      title: 'Once deleted, you will not be able to recover this table!',
+      onOk() {
+        cb();
+      },
+    });
+  };
 
   const menu = (
     <Menu>
@@ -30,7 +51,11 @@ const DatabaseManagement = () => {
       <Menu.Item
         key='3'
         icon={<DeleteOutlined />}
-        onClick={() => handleDelete(selectedTable._id)}
+        onClick={() => {
+          showConfirm(() => {
+            handleDelete(selectedTable._id);
+          });
+        }}
       >
         Delete
       </Menu.Item>
@@ -38,17 +63,23 @@ const DatabaseManagement = () => {
   );
 
   const handleTableSelect = async (id) => {
+    console.log('handleTableSelect', id);
     if (!id) {
       return;
     }
-    const { data: table } = await axios.get(`/tables/${id}`);
+    const { data: table } = await axios.get(`/tables/${id}/coonfiguration`);
     setSelectedTable(table);
+  };
+
+  const refreshTableList = () => {
+    setRefreshCount(refreshCount + 1);
   };
 
   const handleDelete = async (id) => {
     await axios.delete(`/tables/${id}`);
+    message.success('Table deleted successfully');
     setSelectedTable(null);
-    setRefreshCount(refreshCount + 1);
+    refreshTableList();
   };
 
   return (
@@ -58,6 +89,7 @@ const DatabaseManagement = () => {
           <TableManagement
             onTableSelect={handleTableSelect}
             refresh={refreshCount}
+            refreshTableList={refreshTableList}
           />
         </Sider>
 
@@ -73,15 +105,17 @@ const DatabaseManagement = () => {
               <div className=''>
                 <PageHeader
                   style={{ paddingLeft: '0', paddingRight: '0' }}
-                  breadcrumb={{
-                    routes: [{ breadcrumbName: 'Table' }],
-                  }}
                   title={
                     <>
                       <tt>{selectedTable.name}</tt>
+                      <br />
+
+                      <small style={{ fontSize: '65%', color: '#777' }}>
+                        <code>/tables/{selectedTable._id}</code>
+                      </small>
                     </>
                   }
-                  subTitle={''}
+                  subTitle={<></>}
                   extra={[
                     <Dropdown key='0' onClick={console.log} overlay={menu}>
                       <Button>

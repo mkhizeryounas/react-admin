@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Drawer, Form, Input, Space } from 'antd';
+import { Button, Drawer, Form, Input, Space, message } from 'antd';
 import ColumnConfig from './ColumnConfig';
+import axios from '../../utils/axios';
 
-const TableManagement = () => {
+const TableConfigManagement = ({
+  id,
+  isEdit = false,
+  refreshTableList = () => {},
+  onTableSelect = () => {},
+}) => {
   const [open, setOpen] = useState(false);
+  const [form] = Form.useForm();
 
   const showDrawer = () => {
     setOpen(true);
@@ -12,6 +19,22 @@ const TableManagement = () => {
 
   const onClose = () => {
     setOpen(false);
+    form.setFieldsValue({ fields: [], name: '' });
+  };
+
+  const handleSubmit = async (values) => {
+    console.log('submit', values);
+    try {
+      const { data } = await axios.post('/tables', values);
+      console.log('data', data);
+      message.success('Table created');
+      onClose();
+      await refreshTableList();
+      onTableSelect(data._id);
+    } catch (error) {
+      console.log(error);
+      message.error('Something went wrong');
+    }
   };
 
   return (
@@ -26,7 +49,7 @@ const TableManagement = () => {
       </Button>
 
       <Drawer
-        title='Create new table'
+        title={isEdit ? 'Edit table' : 'New table'}
         width={820}
         onClose={onClose}
         placement='left'
@@ -38,20 +61,36 @@ const TableManagement = () => {
         extra={
           <Space>
             <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onClose} type='primary'>
+            <Button
+              form='tableConfig'
+              type='primary'
+              key='submit'
+              htmlType='submit'
+            >
               Submit
             </Button>
           </Space>
         }
       >
-        <Form layout='vertical' hideRequiredMark>
+        <Form
+          layout='vertical'
+          form={form}
+          name='tableConfig'
+          onSubmitCapture={console.log}
+          hideRequiredMark
+          onFinish={handleSubmit}
+          initialValues={{
+            name: '',
+            fields: [],
+          }}
+        >
           <Form.Item
-            name='table_name'
+            name='name'
             label='Table name'
             rules={[
               {
                 required: true,
-                message: 'table_name',
+                message: 'This field is required',
               },
             ]}
           >
@@ -59,7 +98,26 @@ const TableManagement = () => {
           </Form.Item>
 
           <div>
-            <ColumnConfig />
+            <Form.Item
+              name='fields'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please create at least one field',
+                },
+              ]}
+            >
+              {open ? (
+                <ColumnConfig
+                  onChange={(fields) => {
+                    form.setFieldsValue({ fields });
+                  }}
+                  defaultFields={form.getFieldValue('fields')}
+                />
+              ) : (
+                <></>
+              )}
+            </Form.Item>
           </div>
         </Form>
       </Drawer>
@@ -67,4 +125,4 @@ const TableManagement = () => {
   );
 };
 
-export default TableManagement;
+export default TableConfigManagement;

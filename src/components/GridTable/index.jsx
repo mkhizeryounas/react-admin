@@ -3,8 +3,6 @@ import React, { useState, useCallback } from 'react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
 
-const gridStyle = { minHeight: 550 };
-
 const people = [
   {
     id: 1,
@@ -27,7 +25,6 @@ const columns = [
     name: 'id',
     header: 'Id',
     defaultVisible: false,
-    minWidth: 300,
     type: 'number',
   },
   { name: 'name', header: 'Name', defaultFlex: 1, minWidth: 250 },
@@ -35,10 +32,9 @@ const columns = [
     name: 'country',
     header: 'Country',
     defaultFlex: 1,
-    minWidth: 100,
   },
-  { name: 'city', header: 'City', defaultFlex: 1, minWidth: 300 },
-  { name: 'age', header: 'Age', minWidth: 150, type: 'number' },
+  { name: 'city', header: 'City', defaultFlex: 1 },
+  { name: 'age', header: 'Age', type: 'number' },
 ];
 
 const App = () => {
@@ -59,13 +55,11 @@ const App = () => {
     <div>
       <ReactDataGrid
         idProperty='id'
-        style={gridStyle}
         defaultFilterValue={null}
         onEditComplete={onEditComplete}
         editable={true}
         columns={columns}
         dataSource={dataSource}
-        pagination
         onSortInfoChange={console.log}
         remoteSort={true}
       />
