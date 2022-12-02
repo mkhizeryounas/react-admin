@@ -34,7 +34,8 @@ const TableManagement = ({
   };
 
   useEffect(() => {
-    if (!selectedTable) {
+    const hasTables = tables.find((e) => e.key === selectedTable);
+    if (!hasTables || !selectedTable) {
       const newSelectedTable = tables[0]?.key || null;
       setSelectedTable(newSelectedTable);
       onTableSelect(newSelectedTable);
