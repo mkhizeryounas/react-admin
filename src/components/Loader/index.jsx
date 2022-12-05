@@ -1,7 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
-import './styles.css';
+import './style.scss';
 
 const antIcon = (
   <LoadingOutlined

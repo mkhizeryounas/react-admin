@@ -21,7 +21,8 @@ import './style.scss';
 import axios from '../../utils/axios';
 
 import TableManagement from '../../components/TableManagement';
-import GridTable from '../../components/GridTable';
+// import GridTable from '../../components/GridTable';
+import GridTable from '../../components/GlideGrid';
 
 const { Sider, Content } = Layout;
 const { confirm } = Modal;
