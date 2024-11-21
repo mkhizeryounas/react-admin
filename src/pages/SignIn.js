@@ -46,7 +46,7 @@ const SignIn = () => {
             >
               <Title className='mb-15'>Sign In</Title>
               <Title className='font-regular text-muted' level={5}>
-                Enter your email and password to signin on the workspace
+                Enter your email and password to signin
               </Title>
               <Form
                 onFinish={onFinish}
@@ -54,19 +54,6 @@ const SignIn = () => {
                 layout='vertical'
                 className='row-col'
               >
-                <Form.Item
-                  className='username'
-                  label='Workspace'
-                  name='workspace'
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Input placeholder='Workspace' />
-                </Form.Item>
-
                 <Form.Item
                   className='username'
                   label='Email'

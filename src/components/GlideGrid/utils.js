@@ -1,14 +1,10 @@
 import React from 'react';
 
 import {
-  EditableGridCell,
-  GridCell,
   GridCellKind,
-  GridColumn,
   GridColumnIcon,
   isEditableGridCell,
   isTextEditableGridCell,
-  Item,
 } from '@glideapps/glide-data-grid';
 
 import styled from 'styled-components';
@@ -571,8 +567,10 @@ export function clearCell(cell) {
         displayData: '',
       };
     }
+    default: {
+      return cell;
+    }
   }
-  return cell;
 }
 
 function getColumnsForCellTypes() {

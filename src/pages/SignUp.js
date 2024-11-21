@@ -17,7 +17,7 @@ const { Title } = Typography;
 const { Content } = Layout;
 
 const SignUp = () => {
-  const { isLoading, signup, checkWorkspaceAvailability } = useAuth();
+  const { isLoading, signup } = useAuth();
 
   const onFinish = async (values) => {
     try {
@@ -78,36 +78,6 @@ const SignUp = () => {
                   ]}
                 >
                   <Input placeholder='Email' />
-                </Form.Item>
-
-                <Form.Item
-                  className='username'
-                  label='Workspace'
-                  name='workspace'
-                  rules={[
-                    {
-                      required: true,
-                      validator: async (rule, value) => {
-                        if (!value || value.trim() === '') {
-                          throw new Error(`'workspace' is required`);
-                        }
-                        const isAvailable = await checkWorkspaceAvailability({
-                          name: value,
-                        });
-                        console.log('isAvailable', isAvailable);
-                        if (!isAvailable) {
-                          throw new Error('Workspace name is already taken');
-                        }
-                      },
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder='Workspace'
-                    onChange={(data) => {
-                      console.log('data', data.target.value);
-                    }}
-                  />
                 </Form.Item>
 
                 <Form.Item

@@ -1,13 +1,11 @@
 import { Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
 import ROUTES from '../../../routes';
-import useAuth from '../../../hooks/useAuth';
 import logo from '../../../assets/images/logo.png';
 
 const App = ({ color }) => {
   const { pathname } = useLocation();
   let page = pathname.replace('/', '');
-  const { user } = useAuth();
 
   return (
     <>
@@ -17,9 +15,10 @@ const App = ({ color }) => {
           <span
             style={{
               textTransform: 'capitalize',
+              marginLeft: '10px',
             }}
           >
-            {user?.workspace?.name}
+            Zigzag
           </span>
         </div>
         <Menu className='col' theme='light' mode='horizontal'>

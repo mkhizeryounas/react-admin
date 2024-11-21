@@ -2,24 +2,23 @@
 import { Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
-import useAuth from '../../hooks/useAuth';
 import ROUTES from '../../routes';
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace('/', '');
-  const { user } = useAuth();
 
   return (
     <>
       <div className='brand'>
-        <img src={logo} alt='' />
+        <img src={logo} alt='' c />
         <span
           style={{
             textTransform: 'capitalize',
+            marginLeft: '10px',
           }}
         >
-          {user?.workspace?.name}
+          Zigzag
         </span>
       </div>
       <hr />

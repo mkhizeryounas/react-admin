@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ls from '../utils/localstorage';
 import axios from '../utils/axios';
-import { toSlug } from '../utils/common';
 
 const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,8 +31,8 @@ const useAuth = () => {
     window.location.href = returnTo;
   };
 
-  const login = async ({ returnTo = '/', email, password, workspace }) => {
-    const values = { email, password, workspace };
+  const login = async ({ returnTo = '/', email, password }) => {
+    const values = { email, password };
     setIsLoading(true);
     try {
       const { data: user } = await axios.post('/users/signin', values);
@@ -47,21 +46,11 @@ const useAuth = () => {
     }
   };
 
-  const signup = async ({
-    returnTo = '/',
-    email,
-    password,
-    workspace,
-    name,
-  }) => {
+  const signup = async ({ returnTo = '/', email, password, name }) => {
     const values = {
       email,
       password,
       name,
-      workspace: {
-        name: workspace,
-        identifier: toSlug(workspace),
-      },
     };
 
     setIsLoading(true);
@@ -74,19 +63,6 @@ const useAuth = () => {
       ls.remove('user');
       setIsLoading(false);
       throw err;
-    }
-  };
-
-  const checkWorkspaceAvailability = async ({ name }) => {
-    try {
-      const identifier = toSlug(name);
-      const { data } = await axios.get(
-        `/users/workspace/availability?identifier=${identifier}`
-      );
-      console.log('data', data);
-      return data.available;
-    } catch (err) {
-      return false;
     }
   };
 
@@ -103,7 +79,6 @@ const useAuth = () => {
     logout,
     login,
     signup,
-    checkWorkspaceAvailability,
   };
 };
 

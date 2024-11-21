@@ -10,7 +10,6 @@ import useAuth from './hooks/useAuth';
 import Loader from './components/Loader';
 import ROUTES from './routes';
 import Home from './pages/Home';
-import Storage from './pages/Storage';
 
 function App() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -45,7 +44,6 @@ function App() {
               </Main>
             ) : (
               <>
-                <Route path='/sheets' exact component={Storage} />
                 <Route path='/sign-up' exact component={SignUp} />
                 <Route path='/sign-in' exact component={SignIn} />
                 <Route path='/' exact={true} component={SignIn} />
