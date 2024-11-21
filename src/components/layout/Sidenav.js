@@ -11,7 +11,7 @@ function Sidenav({ color }) {
   return (
     <>
       <div className='brand'>
-        <img src={logo} alt='' c />
+        <img src={logo} alt='' className='logo' />
         <span
           style={{
             textTransform: 'capitalize',
