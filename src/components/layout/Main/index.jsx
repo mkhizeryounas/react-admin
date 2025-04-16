@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Layout, Drawer, Affix } from 'antd';
-import Sidenav from '../Sidenav';
-import Header from '../Header/index.jsx';
-import Footer from '../Footer';
+import Sidenav from '@/components/layout/Sidenav';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import './style.scss';
 import 'bootstrap-grid-only-css/dist/css/bootstrap-grid.min.css';
 
@@ -36,7 +36,7 @@ function Main(props) {
         placement={'left'}
         closable={false}
         onClose={() => setVisible(false)}
-        visible={visible}
+        open={visible}
         key={'left'}
         width={250}
         className={`drawer-sidebar`}
@@ -55,22 +55,6 @@ function Main(props) {
           </Sider>
         </Layout>
       </Drawer>
-      {/* <Sider
-        breakpoint='lg'
-        collapsedWidth='0'
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-        trigger={null}
-        width={250}
-        theme='light'
-        className={`sider-primary ant-layout-sider-primary ${
-          sidenavType === '#fff' ? 'active-route' : ''
-        }`}
-        style={{ background: sidenavType }}
-      >
-        <Sidenav color={sidenavColor} />
-      </Sider> */}
       <Layout>
         {fixed ? (
           <Affix>

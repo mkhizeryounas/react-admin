@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Main from './components/layout/Main';
-import 'antd/dist/antd.css';
 import './assets/styles/main.css';
 import './assets/styles/responsive.css';
 import useAuth from './hooks/useAuth';

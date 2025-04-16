@@ -20,28 +20,26 @@ const AccountButton = () => {
     return initials;
   };
 
-  const menu = (
-    <Menu
-      items={[
-        {
-          label: 'Profile',
-          key: '1',
-          icon: <UserOutlined />,
-          onClick: () => history.push('/profile'),
-        },
-        {
-          label: 'Sign out',
-          key: '2',
-          icon: <LockOutlined />,
-          onClick: () => logout({ returnTo: window.location.origin }),
-        },
-      ]}
-    />
-  );
+  const menu = {
+    items: [
+      {
+        label: 'Profile',
+        key: '1',
+        icon: <UserOutlined />,
+        onClick: () => history.push('/profile'),
+      },
+      {
+        label: 'Sign out',
+        key: '2',
+        icon: <LockOutlined />,
+        onClick: () => logout({ returnTo: window.location.origin }),
+      },
+    ],
+  };
 
   return (
     <Badge size='small' count={0}>
-      <Dropdown overlay={menu} trigger={['click']}>
+      <Dropdown menu={menu} trigger={['click']}>
         <Button
           type='text'
           size='large'

@@ -1,7 +1,5 @@
 import { Card, Col, Row, Typography } from 'antd';
 
-import Echart from '../components/chart/EChart';
-import LineChart from '../components/chart/LineChart';
 
 import withLayoout from '../hocs/withLayoout';
 
@@ -139,7 +137,7 @@ function Home() {
               xl={6}
               className='mb-24'
             >
-              <Card bordered={false} className='criclebox '>
+              <Card variant='borderless' className='criclebox '>
                 <div className='number'>
                   <Row align='middle' gutter={[24, 0]}>
                     <Col xs={18}>
@@ -156,19 +154,6 @@ function Home() {
               </Card>
             </Col>
           ))}
-        </Row>
-
-        <Row gutter={[24, 0]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={10} className='mb-24'>
-            <Card bordered={false} className='criclebox h-full'>
-              <Echart />
-            </Card>
-          </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={14} className='mb-24'>
-            <Card bordered={false} className='criclebox h-full'>
-              <LineChart />
-            </Card>
-          </Col>
         </Row>
       </div>
     </>

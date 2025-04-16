@@ -1,7 +1,7 @@
 import { Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
-import ROUTES from '../../../routes';
-import logo from '../../../assets/images/logo.png';
+import ROUTES from '@/routes';
+import logo from '@/assets/images/logo.png';
 
 const App = ({ color }) => {
   const { pathname } = useLocation();
@@ -21,27 +21,30 @@ const App = ({ color }) => {
             Zigzag
           </span>
         </div>
-        <Menu className='col' theme='light' mode='horizontal'>
-          {ROUTES.filter((e) => e.sidebar).map((e, i) => {
+        <Menu
+          className='col'
+          theme='light'
+          mode='horizontal'
+          items={ROUTES.filter((e) => e.sidebar).map((e, i) => {
             const { icon: Icon } = e;
-            if (!page) {
-              page = 'dashboard';
-            }
-            return (
-              <Menu.Item
-                key={i}
-                className={`${page === e.name ? 'ant-menu-item-selected' : ''}`}
-              >
+            return {
+              key: i,
+              label: (
                 <NavLink to={e.path}>
-                  <span className='icon'>
+                  <span
+                    className='icon'
+                    style={{
+                      background: page === e.name ? color : '',
+                    }}
+                  >
                     <Icon />
                   </span>
                   <span className='label'>{e.title}</span>
                 </NavLink>
-              </Menu.Item>
-            );
+              ),
+            };
           })}
-        </Menu>
+        />
       </div>
     </>
   );
